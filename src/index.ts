@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Connection, createConnection, useContainer } from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';
 import app from './app';
-import logger from './common/logging/logger';
+import { logger } from './common';
 
 const result = dotenv.config();
 if (result.error) {

@@ -1,5 +1,4 @@
-import NotImplementedError from '../../common/error/not-implemented.error';
-import { IdOf } from '../../common/type.util';
+import { IdOf, NotImplementedError } from '../../common';
 import Contact from '../model/contact';
 import ContactCreation from '../model/contact-creation';
 import User from '../model/user';

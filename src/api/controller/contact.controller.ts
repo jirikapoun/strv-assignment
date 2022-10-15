@@ -1,11 +1,10 @@
 import { Body, CurrentUser, JsonController, Post } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
-import User from '../../logic/model/user';
-import ContactService from '../../logic/service/contact.service';
+import { ContactService, User } from '../../logic';
 import CreateContactRequest from '../dto/request/create-contact.request';
 import ContactResponse from '../dto/response/contact.response';
-import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../openapi.util';
+import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
 
 @JsonController('/contacts')
 @Service()

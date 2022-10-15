@@ -1,5 +1,5 @@
-import { NonFunctionProperties } from '../../../common/type.util';
-import Contact from '../../../logic/model/contact';
+import { NonFunctionProperties } from '../../../common';
+import { Contact } from '../../../logic';
 
 export default class ContactResponse {
 

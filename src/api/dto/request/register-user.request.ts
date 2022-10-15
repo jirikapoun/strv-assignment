@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { NonFunctionProperties } from '../../../common/type.util';
-import UserRegistration from '../../../logic/model/user-registration';
+import { NonFunctionProperties } from '../../../common';
+import { UserRegistration } from '../../../logic';
 
 export default class RegisterUserRequest {
 

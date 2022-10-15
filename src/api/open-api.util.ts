@@ -32,7 +32,7 @@ export function responseWithPayload(statusCode: string, description: string, pay
   };
 }
 
-const openapiSchema = routingControllersToSpec(
+export const openApiSpec = routingControllersToSpec(
   getMetadataArgsStorage(),
   {},
   {
@@ -47,4 +47,3 @@ const openapiSchema = routingControllersToSpec(
     },
   },
 );
-export default openapiSchema;

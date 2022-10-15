@@ -1,4 +1,4 @@
-import { NonFunctionProperties } from '../../common/type.util';
+import { NonFunctionProperties } from '../../common';
 
 export default class ContactCreation {
   public firstName: string;

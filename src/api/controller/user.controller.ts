@@ -1,10 +1,10 @@
 import { Body, HttpCode, JsonController, Post } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
-import UserService from '../../logic/service/user.service';
+import { UserService } from '../../logic';
 import RegisterUserRequest from '../dto/request/register-user.request';
 import UserResponse from '../dto/response/user.response';
-import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../openapi.util';
+import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
 
 @JsonController('/users')
 @Service()

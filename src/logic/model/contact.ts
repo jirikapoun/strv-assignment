@@ -1,3 +1,5 @@
+import { NonFunctionProperties } from '../../common';
+
 export default class Contact {
 
   public id: string;
@@ -10,7 +12,7 @@ export default class Contact {
 
   public address: string;
 
-  public constructor(input: Contact) {
+  public constructor(input: NonFunctionProperties<Contact>) {
     this.id = input?.id;
     this.firstName = input?.firstName;
     this.lastName = input?.lastName;

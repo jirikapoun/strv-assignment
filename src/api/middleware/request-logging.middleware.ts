@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import logger from '../../common/logging/logger';
+import { logger } from '../../common';
 
 export default function requestLoggingMiddleware(req: Request, res: Response, next: NextFunction) {
   const startHrTime = process.hrtime();

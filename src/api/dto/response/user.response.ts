@@ -1,6 +1,6 @@
 import { IsEmail } from 'class-validator';
-import { NonFunctionProperties } from '../../../common/type.util';
-import User from '../../../logic/model/user';
+import { NonFunctionProperties } from '../../../common';
+import { User } from '../../../logic';
 
 export default class UserResponse {
 
