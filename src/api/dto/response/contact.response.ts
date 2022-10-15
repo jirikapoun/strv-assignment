@@ -1,16 +1,22 @@
+import { IsPhoneNumber, IsString } from 'class-validator';
 import { NonFunctionProperties } from '../../../common';
 import { Contact } from '../../../logic';
 
 export default class ContactResponse {
 
+  @IsString()
   public id: string;
 
+  @IsString()
   public firstName: string;
 
+  @IsString()
   public lastName: string;
 
+  @IsPhoneNumber()
   public phoneNumber: string;
 
+  @IsString()
   public address: string;
 
   public constructor(input: NonFunctionProperties<ContactResponse>) {

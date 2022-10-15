@@ -2,8 +2,13 @@ import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import { ResponsesObject } from 'openapi3-ts';
 import { getMetadataArgsStorage } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
+import * as packageJson from '../../package.json';
 
 const refPointerPrefix = `#/components/schemas/`;
+
+export const jwtSecurity = {
+  security: [{ jwt: [] }]
+}
 
 export const badRequestResponse: ResponsesObject = {
   '400': {
@@ -32,18 +37,25 @@ export function responseWithPayload(statusCode: string, description: string, pay
   };
 }
 
-export const openApiSpec = routingControllersToSpec(
+export const openApiSpec = () => routingControllersToSpec(
   getMetadataArgsStorage(),
   {},
   {
     info: {
-      title: 'My app',
-      version: '1.2.0',
+      title: packageJson.summary,
+      version: packageJson.version,
     },
     components: {
       schemas: validationMetadatasToSchemas({
         refPointerPrefix,
       }),
+      securitySchemes: {
+        jwt: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
     },
   },
 );

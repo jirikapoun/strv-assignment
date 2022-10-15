@@ -32,8 +32,8 @@ useExpressServer(app, {
 
 app.use(compression());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpec, {
-  customCss: '.swagger-ui .topbar { display: none }'
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpec(), {
+  customCss: '.swagger-ui .topbar, .swagger-ui .response-control-media-type { display: none } .swagger-ui .response-controls { padding-top: 0 }'
 }));
 
 export default app;

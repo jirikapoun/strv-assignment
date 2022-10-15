@@ -15,7 +15,7 @@ export default class UserController {
   @Post('/register')
   @HttpCode(201)
   @OpenAPI({
-    description: 'Register user',
+    summary: 'Register a new user',
     responses: {
       ...responseWithPayload('201', 'User succesfully registered', UserResponse.name),
       ...badRequestResponse
@@ -28,7 +28,7 @@ export default class UserController {
 
   @Post('/login')
   @OpenAPI({
-    description: 'Login user',
+    summary: 'Authenticate an existing user',
     responses: {
       ...responseWithPayload('200', 'User succesfully logged in', UserResponse.name),
       ...badRequestResponse,

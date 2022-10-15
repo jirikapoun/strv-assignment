@@ -1,10 +1,15 @@
-import { Body, CurrentUser, JsonController, Post } from 'routing-controllers';
+import { Body, CurrentUser, HttpCode, JsonController, Post } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
 import { ContactService, User } from '../../logic';
 import CreateContactRequest from '../dto/request/create-contact.request';
 import ContactResponse from '../dto/response/contact.response';
-import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
+import {
+  badRequestResponse,
+  jwtSecurity,
+  responseWithPayload,
+  unauthorizedResponse,
+} from '../open-api.util';
 
 @JsonController('/contacts')
 @Service()
@@ -13,7 +18,10 @@ export default class ContactController {
   public constructor(private readonly contactService: ContactService) {}
 
   @Post()
+  @HttpCode(201)
   @OpenAPI({
+    summary: 'Create a new contact',
+    ...jwtSecurity,
     responses: {
       ...responseWithPayload('201', 'Contact successfully created', ContactResponse.name),
       ...badRequestResponse,

@@ -1,5 +1,7 @@
 {
-  "name": "express-typescript-boilerplate",
+  "name": "strv-assignment",
+  "summary": "STRV Assessment Project",
+  "version": "0.0.0",
   "author": "Jiri Kapoun",
   "private": true,
   "main": "dist/index.js",

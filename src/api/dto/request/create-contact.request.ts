@@ -1,14 +1,19 @@
+import { IsPhoneNumber, IsString } from 'class-validator';
 import { NonFunctionProperties } from '../../../common';
 import { ContactCreation } from '../../../logic';
 
 export default class CreateContactRequest {
 
+  @IsString()
   public firstName: string;
 
+  @IsString()
   public lastName: string;
 
+  @IsPhoneNumber()
   public phoneNumber: string;
 
+  @IsString()
   public address: string;
 
   public constructor(input: NonFunctionProperties<CreateContactRequest>) {
