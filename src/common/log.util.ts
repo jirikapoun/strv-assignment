@@ -1,5 +1,7 @@
 import winston, { createLogger, format, transports } from 'winston';
 import Transport from 'winston-transport';
+import { SyslogConfigSetLevels } from 'winston/lib/winston/config';
+import { environment } from './env.util';
 
 /**
  * https://stackoverflow.com/a/41407246
@@ -48,14 +50,34 @@ const logTransports = [
   new ColoredConsoleTransport()
 ];
 
-export type Logger = Pick<winston.Logger, 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'crit' | 'emerg'>;
+let winstonLogger: winston.Logger;
 
-export const logger: Logger = createLogger({
-  levels: winston.config.syslog.levels,
-  format: format.combine(
-    format.timestamp()
-  ),
-  transports: logTransports,
-  defaultMeta: { service: 'api' },
-  level: process.env.NODE_ENV === 'development' ? 'debug' : 'info'
-});
+function getLogger(): winston.Logger {
+  if (!winstonLogger) {
+    winstonLogger = createLogger({
+      levels: winston.config.syslog.levels,
+      format: format.combine(
+        format.timestamp()
+      ),
+      transports: logTransports,
+      defaultMeta: { service: 'api' },
+      level: environment?.LOG_LEVEL
+    });
+  }
+  return winstonLogger;
+}
+
+export type LogLevel = keyof { [ K in keyof SyslogConfigSetLevels as string extends K ? never : number extends K ? never : K ] : SyslogConfigSetLevels[K] }
+
+export type Logger = Pick<winston.Logger, LogLevel>;
+
+export const logger: Logger = {
+  emerg: (message, ...meta: any[]) => getLogger().emerg(message, ...meta),
+  alert: (message, ...meta: any[]) => getLogger().alert(message, ...meta),
+  crit: (message, ...meta: any[]) => getLogger().crit(message, ...meta),
+  error: (message, ...meta: any[]) => getLogger().error(message, ...meta),
+  warning: (message, ...meta: any[]) => getLogger().warning(message, ...meta),
+  notice: (message, ...meta: any[]) => getLogger().notice(message, ...meta),
+  info: (message, ...meta: any[]) => getLogger().info(message, ...meta),
+  debug: (message, ...meta: any[]) => getLogger().debug(message, ...meta)
+}

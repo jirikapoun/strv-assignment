@@ -2,6 +2,7 @@ import { genSaltSync, hashSync } from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
 import { ExtractJwt } from 'passport-jwt';
 import { AuthorizationChecker } from 'routing-controllers/types/AuthorizationChecker';
+import { environment } from './env.util';
 import { logger } from './log.util';
 
 export function hashPassword(password: string): string {
@@ -12,8 +13,8 @@ export function hashPassword(password: string): string {
 export function generateToken(subject: string) {
   return sign(
     { sub: subject },
-    'TODO',
-    { expiresIn: '1h' }
+    environment.JWT_SECRET,
+    { expiresIn: environment.JWT_EXPIRATION }
   )
 }
 
@@ -27,7 +28,7 @@ export function authorizationChecker<User>(findUser: (userId: string) => Promise
     }
 
     return await new Promise(resolve =>
-      verify(token, 'TODO', async (error, decoded) => {
+      verify(token, environment.JWT_SECRET, async (error, decoded) => {
         if (error) {
           logger.debug('Authentication unsuccessful', error);
           return resolve(false);

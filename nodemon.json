@@ -6,8 +6,11 @@
     "node_modules"
   ],
   "watch": [
-    "src"
+    "src",
+    "package.json",
+    ".env",
+    ".env.local"
   ],
-  "exec": "yarn ts-node-server",
+  "exec": "yarn start:local",
   "ext": "ts"
 }

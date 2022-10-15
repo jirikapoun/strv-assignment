@@ -1,18 +1,11 @@
-import dotenv from 'dotenv';
 import 'reflect-metadata';
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';
 import app from './app';
-import { logger } from './common';
+import { environment, loadAndValidateEnvironment, logger } from './common';
 import { UserEntity } from './data';
 
-const result = dotenv.config();
-if (result.error) {
-  dotenv.config({ path: '.env.default' });
-}
-
-const PORT = process.env.PORT || 3000;
-
+loadAndValidateEnvironment();
 useContainer(Container);
 createConnection({
   type: 'sqlite',
@@ -25,8 +18,8 @@ createConnection({
   connection => {
     logger.info('Database connection established');
 
-    app.listen(PORT, () => {
-      logger.notice(`Express server started at http://localhost:${PORT}`);
+    app.listen(environment.PORT, () => {
+      logger.notice(`Express server started at http://localhost:${environment.PORT}`);
     })
 
     process.on('SIGINT', () => {
@@ -36,9 +29,8 @@ createConnection({
           logger.info('Gracefully closed database connection');
           process.exit(0);
         })
-        .catch(err => {
-          logger.error('Could not close database connection');
-          logger.error(err);
+        .catch(error => {
+          logger.error('Could not close database connection', error);
         })
         .finally(() => {
           process.exit(1);
