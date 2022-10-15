@@ -40,8 +40,8 @@
             "forbid": [
               "**/api/{!(index.ts),**/*}",
               "**/common/{!(index.ts),**/*}",
-              "**/data/**",
-              "**/logic/**"
+              "**/data/{!(index.ts),**/*}",
+              "**/logic/{!(index.ts),**/*}"
             ]
           }
         ]

@@ -4,6 +4,7 @@ import { Connection, createConnection, useContainer } from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';
 import app from './app';
 import { logger } from './common';
+import { UserEntity } from './data';
 
 const result = dotenv.config();
 if (result.error) {
@@ -15,10 +16,13 @@ if (result.error) {
 const PORT = process.env.PORT || 3000;
 
 useContainer(Container);
-
 createConnection({
   type: 'sqlite',
   database: ':memory:',
+  synchronize: true,
+  entities: [
+    UserEntity
+  ]
 }).then((connection: Connection) => {
   logger.info('Database connection established');
 

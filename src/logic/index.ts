@@ -1,3 +1,7 @@
+/**
+ * Represents the domain logic of the application.
+ */
+
 export { default as Contact } from './model/contact';
 export { default as ContactCreation } from './model/contact-creation';
 export { default as User } from './model/user';

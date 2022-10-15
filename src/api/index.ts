@@ -1,3 +1,7 @@
+/**
+ * Serves as the presentation layer of the application - implements the API which is consumed by users.
+ */
+
 export { default as ContactController } from './controller/contact.controller';
 export { default as UserController } from './controller/user.controller';
 
