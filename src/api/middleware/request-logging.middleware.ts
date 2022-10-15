@@ -8,10 +8,7 @@ export default function requestLoggingMiddleware(req: Request, res: Response, ne
     const elapsedHrTime = process.hrtime(startHrTime);
     const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
     const message = `${req.method} ${res.statusCode} ${elapsedTimeInMs}ms ${req.path}`;
-    logger.log({
-      level: 'debug',
-      message,
-    });
+    logger.debug(message);
   });
 
   next();

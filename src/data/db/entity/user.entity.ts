@@ -11,11 +11,11 @@ export default class UserEntity {
   public email: string;
 
   @Column()
-  public password: string;
+  public passwordHash: string;
 
   public constructor(input: NonFunctionProperties<UserEntity>) {
     this.id = input?.id;
     this.email = input?.email;
-    this.password = input?.password;
+    this.passwordHash = input?.passwordHash;
   }
 }

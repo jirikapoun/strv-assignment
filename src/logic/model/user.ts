@@ -8,9 +8,12 @@ export default class User {
 
   public email: string;
 
+  public passwordHash: string;
+
   constructor(input: NonFunctionProperties<User>) {
     this.id = input?.id;
     this.email = input?.email;
+    this.passwordHash = input?.passwordHash;
   }
 
   public static fromEntity(entity: UserEntity): User {

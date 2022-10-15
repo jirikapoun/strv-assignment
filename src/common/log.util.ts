@@ -1,3 +1,4 @@
+import winston, { createLogger, format, transports } from 'winston';
 import Transport from 'winston-transport';
 
 /**
@@ -15,8 +16,7 @@ const levelStyleMap: { [key: string]: string } = {
   debug: '\x1b[36m%s\x1b[0m'
 };
 
-export default class ColoredConsoleTransport extends Transport {
-
+class ColoredConsoleTransport extends Transport {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   log(info: any, callback: { (): void }) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain,@typescript-eslint/no-non-null-assertion
@@ -28,3 +28,34 @@ export default class ColoredConsoleTransport extends Transport {
     callback();
   }
 }
+
+const logTransports = [
+  new transports.File({
+    level: 'error',
+    filename: './logs/error.log',
+    format: format.json({
+      replacer: (key, value) => {
+        if (key === 'error') {
+          return {
+            message: (value as Error).message,
+            stack: (value as Error).stack
+          };
+        }
+        return value;
+      }
+    })
+  }),
+  new ColoredConsoleTransport()
+];
+
+export type Logger = Pick<winston.Logger, 'debug' | 'info' | 'notice' | 'warning' | 'error' | 'crit' | 'emerg'>;
+
+export const logger: Logger = createLogger({
+  levels: winston.config.syslog.levels,
+  format: format.combine(
+    format.timestamp()
+  ),
+  transports: logTransports,
+  defaultMeta: { service: 'api' },
+  level: process.env.NODE_ENV === 'development' ? 'debug' : 'info'
+});

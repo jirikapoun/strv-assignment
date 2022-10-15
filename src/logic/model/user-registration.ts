@@ -12,7 +12,10 @@ export default class UserRegistration {
     this.password = input?.password;
   }
 
-  public toEntity(): UserEntity {
-    return new UserEntity(this);
+  public toEntity(hasher: (password: string) => string): UserEntity {
+    return new UserEntity({
+      ...this,
+      passwordHash: hasher(this.password),
+    });
   }
 }

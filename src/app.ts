@@ -5,6 +5,8 @@ import { useContainer, useExpressServer } from 'routing-controllers';
 import swaggerUi from 'swagger-ui-express';
 import { Container } from 'typeorm-typedi-extensions';
 import { ContactController, openApiSpec, requestLoggingMiddleware, UserController } from './api';
+import { authorizationChecker } from './common';
+import { UserService } from './logic';
 
 const app = express();
 
@@ -13,12 +15,18 @@ app.use(helmet());
 
 useContainer(Container);
 useExpressServer(app, {
+  authorizationChecker: authorizationChecker(
+    (userId) => Container.get(UserService).findById(userId)
+  ),
   classTransformer: true,
   controllers: [
     ContactController,
     UserController
   ],
   cors: true,
+  currentUserChecker: async (action) => {
+    return action.request.user
+  },
   defaults: {
     paramOptions: {
       required: true

@@ -1,9 +1,11 @@
-import { Body, HttpCode, JsonController, Post } from 'routing-controllers';
+import { Body, HttpCode, JsonController, Post, UnauthorizedError } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
 import { UserService } from '../../logic';
+import AuthenticateUserRequest from '../dto/request/authenticate-user.request';
 import RegisterUserRequest from '../dto/request/register-user.request';
-import UserResponse from '../dto/response/user.response';
+import UserAuthenticatedResponse from '../dto/response/user-authenticated.response';
+import UserRegisteredResponse from '../dto/response/user-registered.response';
 import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
 
 @JsonController('/users')
@@ -17,25 +19,30 @@ export default class UserController {
   @OpenAPI({
     summary: 'Register a new user',
     responses: {
-      ...responseWithPayload('201', 'User succesfully registered', UserResponse.name),
+      ...responseWithPayload('201', 'User succesfully registered', UserRegisteredResponse.name),
       ...badRequestResponse
     },
   })
-  public async register(@Body() request: RegisterUserRequest): Promise<UserResponse> {
+  public async register(@Body() request: RegisterUserRequest): Promise<UserRegisteredResponse> {
     const user = await this.userService.register(request.toRegistration());
-    return UserResponse.fromUser(user);
+    return UserRegisteredResponse.fromUser(user);
   }
 
-  @Post('/login')
+  @Post('/auth')
   @OpenAPI({
     summary: 'Authenticate an existing user',
     responses: {
-      ...responseWithPayload('200', 'User succesfully logged in', UserResponse.name),
+      ...responseWithPayload('200', 'User succesfully authenticated', UserAuthenticatedResponse.name),
       ...badRequestResponse,
       ...unauthorizedResponse,
     }
   })
-  public async login(): Promise<void> {
-    //@todo implement
+  public async login(@Body() request: AuthenticateUserRequest): Promise<UserAuthenticatedResponse> {
+    const token = await this.userService.authenticate(request.email, request.password);
+    if (token) {
+      return UserAuthenticatedResponse.fromToken(token);
+    } else {
+      throw new UnauthorizedError('Invalid credentials');
+    }
   }
 }
