@@ -1,7 +1,7 @@
 {
   "name": "strv-assignment",
   "summary": "STRV Assessment Project",
-  "version": "0.0.0",
+  "version": "0.0.0-rc.1",
   "author": "Jiri Kapoun",
   "private": true,
   "main": "dist/index.js",
