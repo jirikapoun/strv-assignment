@@ -8,7 +8,9 @@ import { ContactController, openApiSpec, requestLoggingMiddleware, UserControlle
 import { authorizationChecker } from './common';
 import { UserService } from './logic';
 
-const app = express();
+//test
+
+export const app = express();
 
 app.use(requestLoggingMiddleware);
 app.use(helmet());
