@@ -1,8 +1,14 @@
 import { compare } from 'bcrypt';
-import { InternalServerError } from 'routing-controllers';
 import { Service } from 'typedi';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { _throw, DuplicateEmailError, generateToken, hashPassword, logger } from '../../common';
+import {
+  _throw,
+  DuplicateEmailError,
+  generateToken,
+  hashPassword,
+  logger,
+  UndefinedValueError,
+} from '../../common';
 import { UserRepository } from '../../data';
 import Token from '../model/token';
 import User from '../model/user';
@@ -46,7 +52,7 @@ export default class UserService {
     }
 
     const subject = userEntity.id
-      ?? _throw(new InternalServerError('Cannot create token for user with undefined id'));
+      ?? _throw(new UndefinedValueError('Cannot create token for user with undefined id', userEntity));
     const token = generateToken(subject);
 
     return {
