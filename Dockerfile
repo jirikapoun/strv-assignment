@@ -10,10 +10,11 @@ RUN yarn install
 # Copy source
 COPY src ./src
 COPY tsconfig.json ./tsconfig.json
-COPY openapi.json ./openapi.json
+COPY tsconfig.production.json ./tsconfig.production.json
+COPY package.json ./package.json
 
 # Build dist
-RUN yarn build
+RUN yarn build:prod
 
 # Start production image build
 FROM gcr.io/distroless/nodejs:16
@@ -21,6 +22,7 @@ FROM gcr.io/distroless/nodejs:16
 # Copy node modules and build directory
 COPY --from=base ./node_modules ./node_modules
 COPY --from=base /dist /dist
+COPY .env ./.env
 
 # Expose port 3000
 EXPOSE 3000
