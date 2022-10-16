@@ -72,12 +72,12 @@ export type LogLevel = keyof { [ K in keyof SyslogConfigSetLevels as string exte
 export type Logger = Pick<winston.Logger, LogLevel>;
 
 export const logger: Logger = {
-  emerg: (message, ...meta: any[]) => getLogger().emerg(message, ...meta),
-  alert: (message, ...meta: any[]) => getLogger().alert(message, ...meta),
-  crit: (message, ...meta: any[]) => getLogger().crit(message, ...meta),
-  error: (message, ...meta: any[]) => getLogger().error(message, ...meta),
-  warning: (message, ...meta: any[]) => getLogger().warning(message, ...meta),
-  notice: (message, ...meta: any[]) => getLogger().notice(message, ...meta),
-  info: (message, ...meta: any[]) => getLogger().info(message, ...meta),
-  debug: (message, ...meta: any[]) => getLogger().debug(message, ...meta)
+  emerg: (message, ...meta: unknown[]) => getLogger().emerg(message, ...meta),
+  alert: (message, ...meta: unknown[]) => getLogger().alert(message, ...meta),
+  crit: (message, ...meta: unknown[]) => getLogger().crit(message, ...meta),
+  error: (message, ...meta: unknown[]) => getLogger().error(message, ...meta),
+  warning: (message, ...meta: unknown[]) => getLogger().warning(message, ...meta),
+  notice: (message, ...meta: unknown[]) => getLogger().notice(message, ...meta),
+  info: (message, ...meta: unknown[]) => getLogger().info(message, ...meta),
+  debug: (message, ...meta: unknown[]) => getLogger().debug(message, ...meta)
 }

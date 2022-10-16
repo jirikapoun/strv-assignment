@@ -1,6 +1,6 @@
 import { Expose, plainToClass } from 'class-transformer';
 import {
-  IsBoolean,
+  IsBooleanString,
   IsIn,
   IsNumber,
   IsOptional,
@@ -11,30 +11,13 @@ import {
 } from 'class-validator';
 import dotenv from 'dotenv';
 import ms from 'ms';
-import { DatabaseType } from 'typeorm';
 import { logger, LogLevel } from './log.util';
 import { NonFunctionProperties } from './type.util';
 
-const databaseTypes: DatabaseType[] = [
-  'aurora-data-api',
-  'aurora-data-api-pg',
-  'better-sqlite3',
-  'capacitor',
-  'cockroachdb',
-  'cordova',
-  'expo',
-  'mariadb',
-  'mongodb',
-  'mssql',
-  'mysql',
-  'nativescript',
-  'oracle',
+const databaseTypes = [
   'postgres',
-  'react-native',
-  'sap',
   'sqlite',
-  'sqljs',
-];
+] as const;
 
 function expirationValid(expiration: string): boolean {
   try {
@@ -65,7 +48,7 @@ export class Environment {
   /** Type of database to use. */
   @IsIn(databaseTypes)
   @Expose()
-  DB_TYPE: DatabaseType;
+  DB_TYPE: typeof databaseTypes[number];
 
   /** Database hostname (if applies for the used database type). */
   @IsString()
@@ -87,15 +70,15 @@ export class Environment {
 
   /** Set to true to synchronize database schema with the entities on startup.
    *  Not to be used in production. Use database migrations instead. */
-  @IsBoolean()
+  @IsBooleanString()
   @Expose()
-  DB_SYNC: boolean;
+  DB_SYNCHRONIZE: 'true' | 'false';
 
   /** Set to true to drop the database schema on every startup.
    *  Definitely not to be used in production. */
-  @IsBoolean()
+  @IsBooleanString()
   @Expose()
-  DB_DROP: boolean;
+  DB_DROP_SCHEMA: 'true' | 'false';
 
   @IsString()
   @Length(64,64)
@@ -124,8 +107,8 @@ export class Environment {
     this.DB_HOST = input?.DB_HOST;
     this.DB_NAME = input?.DB_NAME;
     this.DB_SCHEMA = input?.DB_SCHEMA;
-    this.DB_SYNC = input?.DB_SYNC;
-    this.DB_DROP = input?.DB_DROP;
+    this.DB_SYNCHRONIZE = input?.DB_SYNCHRONIZE;
+    this.DB_DROP_SCHEMA = input?.DB_DROP_SCHEMA;
     this.JWT_SECRET = input?.JWT_SECRET;
     this.JWT_EXPIRATION = input?.JWT_EXPIRATION;
     this.LOG_LEVEL = input?.LOG_LEVEL;

@@ -1,12 +1,11 @@
 import { NonFunctionProperties } from '../../common';
+import { CreateContactAction } from '../../data';
 
 export default class ContactCreation {
+
   public firstName: string;
-
   public lastName: string;
-
   public phoneNumber: string;
-
   public address: string;
 
   public constructor(input: NonFunctionProperties<ContactCreation>) {
@@ -14,5 +13,9 @@ export default class ContactCreation {
     this.lastName = input?.lastName;
     this.phoneNumber = input?.phoneNumber;
     this.address = input?.address;
+  }
+
+  public toCreateContactAction(): CreateContactAction {
+    return new CreateContactAction(this);
   }
 }

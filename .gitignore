@@ -121,3 +121,6 @@ Temporary Items
 
 .idea
 dist
+
+firebase-credentials.json
+*.sqlite

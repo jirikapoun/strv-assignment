@@ -1,3 +1,4 @@
+import { applicationDefault, initializeApp } from 'firebase-admin/app';
 import 'reflect-metadata';
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typeorm-typedi-extensions';
@@ -6,11 +7,17 @@ import { environment, loadAndValidateEnvironment, logger } from './common';
 import { UserEntity } from './data';
 
 loadAndValidateEnvironment();
+initializeApp({
+  credential: applicationDefault()
+});
 useContainer(Container);
 createConnection({
-  type: 'sqlite',
-  database: ':memory:',
-  synchronize: true,
+  type: environment.DB_TYPE,
+  host: environment.DB_HOST,
+  database: environment.DB_NAME,
+  schema: environment.DB_SCHEMA,
+  synchronize: environment.DB_SYNCHRONIZE === 'true',
+  dropSchema: environment.DB_DROP_SCHEMA === 'true',
   entities: [
     UserEntity
   ]

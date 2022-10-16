@@ -1,13 +1,19 @@
-import { genSaltSync, hashSync } from 'bcrypt';
+import { compare, genSaltSync, hashSync } from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken';
 import { ExtractJwt } from 'passport-jwt';
 import { AuthorizationChecker } from 'routing-controllers/types/AuthorizationChecker';
 import { environment } from './env.util';
 import { logger } from './log.util';
 
+export const hashAlgorithm = 'BCRYPT';
+
 export function hashPassword(password: string): string {
   const salt = genSaltSync();
   return hashSync(password, salt);
+}
+
+export function verifyPassword(password: string, passwordHash: string): Promise<boolean> {
+  return compare(password, passwordHash);
 }
 
 export function generateToken(subject: string) {

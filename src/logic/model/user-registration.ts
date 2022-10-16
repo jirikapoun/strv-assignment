@@ -4,7 +4,6 @@ import { UserEntity } from '../../data';
 export default class UserRegistration {
 
   public email: string;
-
   public password: string;
 
   public constructor(input: NonFunctionProperties<UserRegistration>) {

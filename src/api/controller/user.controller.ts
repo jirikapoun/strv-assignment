@@ -5,7 +5,6 @@ import { UserService } from '../../logic';
 import AuthenticateUserRequest from '../dto/request/authenticate-user.request';
 import RegisterUserRequest from '../dto/request/register-user.request';
 import UserAuthenticatedResponse from '../dto/response/user-authenticated.response';
-import UserRegisteredResponse from '../dto/response/user-registered.response';
 import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
 
 @JsonController('/users')
@@ -17,15 +16,15 @@ export default class UserController {
   @Post('/register')
   @HttpCode(201)
   @OpenAPI({
-    summary: 'Register a new user',
+    summary: 'Register and authenticate a new user',
     responses: {
-      ...responseWithPayload('201', 'User succesfully registered', UserRegisteredResponse.name),
+      ...responseWithPayload('201', 'User succesfully registered and authenticated', UserAuthenticatedResponse.name),
       ...badRequestResponse
     },
   })
-  public async register(@Body() request: RegisterUserRequest): Promise<UserRegisteredResponse> {
-    const user = await this.userService.register(request.toRegistration());
-    return UserRegisteredResponse.fromUser(user);
+  public async register(@Body() request: RegisterUserRequest): Promise<UserAuthenticatedResponse> {
+    await this.userService.register(request.toRegistration());
+    return this.login(request);
   }
 
   @Post('/auth')
