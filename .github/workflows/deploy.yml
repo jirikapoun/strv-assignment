@@ -47,7 +47,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-      - $default-branch
+      - master
 
 env:
   PROJECT_ID: strv-assignment-365413
