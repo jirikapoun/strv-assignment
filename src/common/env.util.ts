@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import dotenv from 'dotenv';
 import ms from 'ms';
-import { logger, LogLevel } from './log.util';
+import { logger, LogLevel, logLevels, LogType, logTypes } from './log.util';
 import { NonFunctionProperties } from './type.util';
 
 const databaseTypes = [
@@ -20,17 +20,6 @@ const databaseTypes = [
 ] as const;
 
 type DatabaseType = typeof databaseTypes[number];
-
-const logLevels: LogLevel[] = [
-  'emerg',
-  'alert',
-  'crit',
-  'error',
-  'warning',
-  'notice',
-  'info',
-  'debug',
-]
 
 const nodeEnvs = ['development', 'production', 'test'] as const;
 
@@ -107,6 +96,10 @@ export class Environment {
   @Expose()
   LOG_LEVEL: LogLevel;
 
+  @IsIn(logTypes)
+  @Expose()
+  LOG_TYPE: LogType;
+
   @IsIn(nodeEnvs)
   @Expose()
   NODE_ENV: NodeEnv;
@@ -128,6 +121,7 @@ export class Environment {
     this.JWT_SECRET = input?.JWT_SECRET;
     this.JWT_EXPIRATION = input?.JWT_EXPIRATION;
     this.LOG_LEVEL = input?.LOG_LEVEL;
+    this.LOG_TYPE = input?.LOG_TYPE;
     this.NODE_ENV = input?.NODE_ENV;
     this.PORT = input?.PORT;
   }

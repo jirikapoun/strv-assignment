@@ -8537,6 +8537,11 @@ widest-line@^3.1.0:
   dependencies:
     string-width "^4.0.0"
 
+winston-cloudrun@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/winston-cloudrun/-/winston-cloudrun-1.4.0.tgz#e2e01995d667023b2c420728bc7b75e1d1555dd0"
+  integrity sha512-Yjw0+kNnSQn6dci0yoXSxD/F+xqoQv1j0g/DO2TCJlXd48Hk83gL/UWv6J0w95314kNL+Lic4V/Miueq9P/jhg==
+
 winston-transport@4.5.0, winston-transport@^4.4.0, winston-transport@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.5.0.tgz#6e7b0dd04d393171ed5e4e4905db265f7ab384fa"
