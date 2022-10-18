@@ -1,16 +1,16 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { NonFunctionProperties } from '../../../common';
 
-@Entity()
+@Entity({ name: 'user' })
 export default class UserEntity {
 
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
   public id?: string;
 
-  @Column()
+  @Column({ name: 'email' })
   public email: string;
 
-  @Column()
+  @Column({ name: 'passwordHash' })
   public passwordHash: string;
 
   public constructor(input: NonFunctionProperties<UserEntity>) {
