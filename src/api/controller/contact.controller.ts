@@ -11,14 +11,17 @@ import {
   unauthorizedResponse,
 } from '../open-api.util';
 
-@JsonController('/contacts')
+export const contactControllerPath = '/contacts';
+export const createContactPath = '';
+
+@JsonController(contactControllerPath)
 @Authorized()
 @Service()
 export default class ContactController {
 
   public constructor(private readonly contactService: ContactService) {}
 
-  @Post()
+  @Post(createContactPath)
   @HttpCode(201)
   @OpenAPI({
     summary: 'Create a new contact',

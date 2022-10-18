@@ -37,7 +37,7 @@ export type LogType = typeof logTypes[number];
 
 const logFormats: Record<LogType, () => Logform.Format> = {
   "console": () => format.combine(format.timestamp()),
-  "console-simple": () => format.combine(format.timestamp()),
+  "console-simple": () => format.simple(),
   "cloudrun": () => getCloudLoggingFormat(),
 };
 

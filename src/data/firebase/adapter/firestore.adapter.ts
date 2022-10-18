@@ -4,7 +4,7 @@ import CreateContactAction from '../dto/action/create-contact.action';
 import InitializeAddressbookAction from '../dto/action/initialize-addressbook.action';
 import ContactCreationResult from '../dto/result/contact-creation.result';
 
-const addressbookCollection = 'addressbooks';
+export const addressbookCollection = 'addressbooks';
 
 @Service()
 export default class FirestoreAdapter {

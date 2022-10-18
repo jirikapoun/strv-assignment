@@ -53,7 +53,7 @@ export default class UserService {
       throw error;
     }
 
-    logger.info(`Registered user with email ${user.email}`, user);
+    logger.info(`Registered user with email ${user.email}`, { ...user, passwordHash: undefined });
     return user;
   }
 

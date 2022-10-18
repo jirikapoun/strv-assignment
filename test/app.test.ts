@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/app';
-import setup from './setup';
+import { setup } from './test.util';
 
 describe('app', () => {
 
