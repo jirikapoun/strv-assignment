@@ -1,6 +1,9 @@
 import { _throw, NonFunctionProperties, UndefinedValueError } from '../../common';
 import { ImportUserAction, InitializeAddressbookAction, UserEntity } from '../../data';
 
+/**
+ * A user account in the system.
+ */
 export default class User {
 
   public id: string;

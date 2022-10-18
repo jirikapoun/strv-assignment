@@ -1,6 +1,9 @@
 import { NonFunctionProperties } from '../../common';
 import { ContactCreationResult } from '../../data';
 
+/**
+ * A contact from a user's address book.
+ */
 export default class Contact {
 
   public id: string;

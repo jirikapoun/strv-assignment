@@ -14,6 +14,9 @@ import Token from '../model/token';
 import User from '../model/user';
 import UserRegistration from '../model/user-registration';
 
+/**
+ * Service for user account related operations.
+ */
 @Service()
 export default class UserService {
 
@@ -23,11 +26,19 @@ export default class UserService {
     private readonly firestoreAdapter: FirestoreAdapter,
   ) {}
 
+  /**
+   * Returns the user with the given id.
+   * @returns User with the given id if it exists, `undefined` otherwise.
+   */
   public async findById(id: string): Promise<User | undefined> {
     const userEntity = await this.userRepository.findOne(id);
     return userEntity ? User.fromEntity(userEntity) : undefined;
   }
 
+  /**
+   * Creates a new user in the system with the given registration data.
+   * @returns The newly created user.
+   */
   public async register(registration: UserRegistration): Promise<User> {
     const existingEntity = await this.userRepository.findByEmail(registration.email);
     if (existingEntity) {
@@ -57,6 +68,10 @@ export default class UserService {
     return user;
   }
 
+  /**
+   * Verifies the user's credentials, generates a JWT token for the user and returns the token.
+   * @returns Authentication token for the user if the credentials are valid, `false` otherwise.
+   */
   public async authenticate(email: string, password: string): Promise<Token | false> {
     const userEntity = await this.userRepository.findByEmail(email);
     if (!userEntity) {

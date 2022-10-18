@@ -1,6 +1,9 @@
 import { NonFunctionProperties } from '../../common';
 import { UserEntity } from '../../data';
 
+/**
+ * Data necessary to perform a user registration.
+ */
 export default class UserRegistration {
 
   public email: string;

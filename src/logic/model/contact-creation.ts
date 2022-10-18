@@ -1,6 +1,9 @@
 import { NonFunctionProperties } from '../../common';
 import { CreateContactAction } from '../../data';
 
+/**
+ * Data needed to create a new contact.
+ */
 export default class ContactCreation {
 
   public firstName: string;
