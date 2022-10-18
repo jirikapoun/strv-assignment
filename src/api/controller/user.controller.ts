@@ -7,13 +7,17 @@ import RegisterUserRequest from '../dto/request/register-user.request';
 import UserAuthenticatedResponse from '../dto/response/user-authenticated.response';
 import { badRequestResponse, responseWithPayload, unauthorizedResponse } from '../open-api.util';
 
-@JsonController('/users')
+export const userControllerPath = '/users';
+export const registerUserPath = '/register';
+export const authenticateUserPath = '/auth';
+
+@JsonController(userControllerPath)
 @Service()
 export default class UserController {
 
   public constructor(private readonly userService: UserService) {}
 
-  @Post('/register')
+  @Post(registerUserPath)
   @HttpCode(201)
   @OpenAPI({
     summary: 'Register and authenticate a new user',
@@ -27,7 +31,7 @@ export default class UserController {
     return this.login(request);
   }
 
-  @Post('/auth')
+  @Post(authenticateUserPath)
   @OpenAPI({
     summary: 'Authenticate an existing user',
     responses: {

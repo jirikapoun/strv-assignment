@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { NonFunctionProperties } from '../../../common';
 
 export default class AuthenticateUserRequest {
@@ -9,7 +9,6 @@ export default class AuthenticateUserRequest {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(6)
   public password: string;
 
   public constructor(input: NonFunctionProperties<AuthenticateUserRequest>) {

@@ -18,9 +18,7 @@
     "start": "node dist/src/index.js",
     "start:dev": "firebase emulators:exec nodemon",
     "start:local": "ts-node src/index.ts",
-    "test": "jest",
-    "test:e2e": "jest --config jest.e2e.config.js",
-    "test:cov": "jest --config jest.cov.config.js --coverage",
+    "test": "env-cmd -f .env.test firebase emulators:exec jest",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
