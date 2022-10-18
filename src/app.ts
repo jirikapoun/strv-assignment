@@ -4,7 +4,13 @@ import helmet from 'helmet';
 import { useContainer, useExpressServer } from 'routing-controllers';
 import swaggerUi from 'swagger-ui-express';
 import { Container } from 'typeorm-typedi-extensions';
-import { ContactController, openApiSpec, requestLoggingMiddleware, UserController } from './api';
+import {
+  ContactController,
+  ErrorHandlingMiddleware,
+  openApiSpec,
+  requestLoggingMiddleware,
+  UserController,
+} from './api';
 import { authorizationChecker } from './common';
 import { UserService } from './logic';
 
@@ -29,12 +35,16 @@ useExpressServer(app, {
   currentUserChecker: async (action) => {
     return action.request.user
   },
+  defaultErrorHandler: false,
   defaults: {
     paramOptions: {
       required: true
     },
     undefinedResultCode: 204,
   },
+  middlewares: [
+    ErrorHandlingMiddleware
+  ],
   validation: {
     forbidUnknownValues: true,
   }

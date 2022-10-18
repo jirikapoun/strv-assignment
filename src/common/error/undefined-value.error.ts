@@ -1,6 +1,4 @@
-import { InternalServerError } from 'routing-controllers';
-
-export default class UndefinedValueError extends InternalServerError {
+export default class UndefinedValueError extends Error {
 
   public meta: unknown[];
 
