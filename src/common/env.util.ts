@@ -19,14 +19,7 @@ const databaseTypes = [
   'sqlite',
 ] as const;
 
-function expirationValid(expiration: string): boolean {
-  try {
-    ms(expiration);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+type DatabaseType = typeof databaseTypes[number];
 
 const logLevels: LogLevel[] = [
   'emerg',
@@ -39,22 +32,43 @@ const logLevels: LogLevel[] = [
   'debug',
 ]
 
-export type NodeEnv = 'development' | 'production';
+const nodeEnvs = ['development', 'production', 'test'] as const;
 
-const nodeEnvs: NodeEnv[] = ['development', 'production'];
+type NodeEnv = typeof nodeEnvs[number];
+
+function expirationValid(expiration: string): boolean {
+  try {
+    ms(expiration);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 export class Environment {
 
   /** Type of database to use. */
   @IsIn(databaseTypes)
   @Expose()
-  DB_TYPE: typeof databaseTypes[number];
+  DB_TYPE: DatabaseType;
 
   /** Database hostname (if applies for the used database type). */
   @IsString()
   @IsOptional()
   @Expose()
   DB_HOST: string;
+
+  /** Database connection username (if applies for the used database type). */
+  @IsString()
+  @IsOptional()
+  @Expose()
+  DB_USERNAME: string;
+
+  /** Database connection username (if applies for the used database type). */
+  @IsString()
+  @IsOptional()
+  @Expose()
+  DB_PASSWORD: string;
 
   /** Database name (if applies for the used database type). */
   @IsString()
@@ -105,6 +119,8 @@ export class Environment {
   public constructor(input: NonFunctionProperties<Environment>) {
     this.DB_TYPE = input?.DB_TYPE;
     this.DB_HOST = input?.DB_HOST;
+    this.DB_USERNAME = input?.DB_USERNAME;
+    this.DB_PASSWORD = input?.DB_PASSWORD;
     this.DB_NAME = input?.DB_NAME;
     this.DB_SCHEMA = input?.DB_SCHEMA;
     this.DB_SYNCHRONIZE = input?.DB_SYNCHRONIZE;

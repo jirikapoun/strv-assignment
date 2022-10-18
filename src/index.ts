@@ -14,6 +14,8 @@ useContainer(Container);
 createConnection({
   type: environment.DB_TYPE,
   host: environment.DB_HOST,
+  username: environment.DB_USERNAME,
+  password: environment.DB_PASSWORD,
   database: environment.DB_NAME,
   schema: environment.DB_SCHEMA,
   synchronize: environment.DB_SYNCHRONIZE === 'true',
