@@ -8,8 +8,7 @@
   "watch": [
     "src",
     "package.json",
-    ".env",
-    ".env.local"
+    ".env"
   ],
   "exec": "yarn start:local",
   "ext": "ts"

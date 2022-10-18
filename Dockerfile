@@ -22,7 +22,6 @@ FROM gcr.io/distroless/nodejs:16
 # Copy node modules and build directory
 COPY --from=base ./node_modules ./node_modules
 COPY --from=base /dist /dist
-COPY .env ./.env
 
 # Expose port 3000
 EXPOSE 3000
