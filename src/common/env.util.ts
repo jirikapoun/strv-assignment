@@ -120,8 +120,10 @@ export class Environment {
 export let environment: Environment;
 
 export function loadAndValidateEnvironment() {
-  const debug = process.env.NODE_ENV === 'development';
-  dotenv.config({ debug });
+  dotenv.config({
+    path: process.env.DOTENV_CONFIG_PATH || '.env',
+    debug: process.env.NODE_ENV === 'development'
+  });
 
   environment = plainToClass(
     Environment,
