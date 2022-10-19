@@ -37,25 +37,31 @@ export function responseWithPayload(statusCode: string, description: string, pay
   };
 }
 
-export const openApiSpec = () => routingControllersToSpec(
-  getMetadataArgsStorage(),
-  {},
-  {
-    info: {
-      title: packageJson.summary,
-      version: packageJson.version,
-    },
-    components: {
-      schemas: validationMetadatasToSchemas({
-        refPointerPrefix,
-      }),
-      securitySchemes: {
-        jwt: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
+export const openApiSpec = () => {
+  const schemas = validationMetadatasToSchemas({ refPointerPrefix });
+  for (const schema in schemas) {
+    if (!schema.endsWith('Request') && !schema.endsWith('Response')) {
+      delete schemas[schema];
+    }
+  }
+  return routingControllersToSpec(
+    getMetadataArgsStorage(),
+    {},
+    {
+      info: {
+        title: packageJson.summary,
+        version: packageJson.version,
+      },
+      components: {
+        schemas,
+        securitySchemes: {
+          jwt: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          }
         }
-      }
+      },
     },
-  },
-);
+  );
+}
