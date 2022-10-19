@@ -20,9 +20,9 @@ The basic technologies used in the project are:
 - **Express.js** as a web framework, significantly enhanced by:
   - `routing-controllers` library that allows to use decorators to define routes and controllers
   - `class-validator` and `class-transformer` libraries that allow to use decorators to validate and transform data
-  - `class-validator-jsonschema`, `routing-controllers-openapi` and `swagger-ui-express` libraries that enable automatic generation of OpenAPI specification and UI with documentation
+  - `class-validator-jsonschema`, `routing-controllers-openapi` and `swagger-ui-express` libraries that enable automatic generation of OpenAPI specification and documentation UI
 - **TypeDI** as a dependency injection container
-- **TypeORM** as an database abstraction layer
+- **TypeORM** as a database abstraction layer
 - **PostgreSQL** as a production database, **SQLite** as a development database
 - **Firestore Database** for storing data of users
 
@@ -48,8 +48,10 @@ The codebase is structured as follows:
         - `action` - schema for input data of Firestore operations
         - `result` - schema for output data of Firestore operations
   - `logic` - **domain layer module**, contains business logic
-    - `domain` - domain objects
+    - `model` - domain objects
     - `service` - domain services
+  - `app.ts` - Express.js application
+  - `index.ts` - entry point of the application
 - `test` - integration tests
   - The file structure is the same as in `src` directory.
 
@@ -66,6 +68,6 @@ Every one of the modules has its own `index.ts` file that exports all the public
 
 
 ## Notes
-- Everything that gets pushed to the `master` branch is automatically deployed to the production environment. Keep that in mind when making changes to the code.
+- Everything that is pushed to the `master` branch gets automatically deployed to the production environment. Keep that in mind when making changes to the code.
 - The application is hosted on Google Cloud Run platform. Since it is a serverless platform, the application is not always running. The first request to the application will take a few seconds to respond. Subsequent requests will be much faster.
 - Code coverage is generated in the `coverage` folder every time the tests are run. The coverage report can be found in `coverage/index.html`.
