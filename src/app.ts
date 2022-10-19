@@ -14,8 +14,6 @@ import {
 import { authorizationChecker } from './common';
 import { UserService } from './logic';
 
-//test
-
 export const app = express();
 
 app.use(requestLoggingMiddleware);
